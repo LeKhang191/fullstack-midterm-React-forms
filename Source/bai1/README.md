@@ -1,29 +1,13 @@
-# Ex1: Create Django project and endpoint /health
+# Báo cáo Bài 1: Filter Form trong React
 
-## Environment requirement
-- Python 3.10 above
-- Django (version that write in `requirements.txt`)
+### 1. Mục tiêu và Kỹ thuật sử dụng
+- **Controlled Components**: Form lọc dữ liệu gồm 2 trường (`keyword` và `status`), toàn bộ giá trị và sự kiện thay đổi được quản lý thông qua React State `filters`.
+- **Custom Hook `useDebounce`**: Làm trễ quá trình kích hoạt tìm kiếm khi người dùng gõ từ khóa (delay 400ms), tránh việc re-render hoặc gửi request liên tục lên server.
+- **Đồng bộ bộ lọc với URL (URLSearchParams)**: Sử dụng hook `useSearchParams` từ `react-router-dom` để đồng bộ trạng thái filter lên query string của trình duyệt (ví dụ: `/?keyword=react&status=in_progress`). Khi người dùng F5 hoặc chia sẻ đường dẫn, bộ lọc vẫn được giữ nguyên.
+- **Hành động Submit & Reset**: Nút "Tìm kiếm" kích hoạt tìm kiếm tức thì; nút "Đặt lại (Reset)" xóa toàn bộ filter và đưa danh sách về mặc định.
 
-## How to run
-```bash
-cd Source/mini-app
-python -m venv venv
-source venv/bin/activate        # Windows: venv\Scripts\activate
-pip install -r requirements.txt
-python manage.py test           # run auto testing
-python manage.py runserver      # server start
-```
-open `http://127.0.0.1:8000/health` or using curl:
-```bash
-curl -i http://127.0.0.1:8000/health
-```
-
-## Output
-```
-HTTP/1.1 200 OK
-Content-Type: application/json
-
-{"status": "ok"}
-```
-
-## Illustrate image
+### 2. Tái sử dụng UI Components (Bài 3)
+Form lọc đã tái sử dụng trực tiếp các components từ `src/components/ui`:
+- `InputField`: Ô nhập text từ khóa tìm kiếm.
+- `SelectField`: Dropdown lựa chọn trạng thái (`draft`, `in_progress`, `done`).
+- `Button` và `FormRow`: Định dạng bố cục và nút thao tác.

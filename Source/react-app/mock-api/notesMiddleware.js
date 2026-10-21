@@ -1,7 +1,9 @@
 /**
- * Mock REST API for TV2 only. Uses a JSON file on disk for demo persistence.
- * It is mounted by Vite in DEV/PREVIEW mode and does not modify Django.
- * Supported endpoints: GET, PUT /api/notes/:id/
+ * Mock REST API cho toàn bộ ứng dụng (Bài 1 + Bài 2).
+ * Hỗ trợ:
+ * - GET /api/notes/ (Lọc theo query: ?keyword=&status=) [Bài 1]
+ * - GET /api/notes/:id/ [Bài 2]
+ * - PUT /api/notes/:id/ [Bài 2]
  */
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
@@ -24,7 +26,6 @@ function readNotes(dataFile) {
   } catch (error) {
     if (error.code !== 'ENOENT') throw error;
   }
-  // Seed once: restarting Vite will not erase the previous demo update.
   const seeded = structuredClone(initialNotes);
   saveNotes(dataFile, seeded);
   return seeded;
@@ -60,7 +61,37 @@ export function createNotesMiddleware({ dataFile, latencyMs = 200 }) {
   if (!dataFile) throw new Error('dataFile is required');
 
   return async function notesMiddleware(request, response, next = () => {}) {
-    const pathname = new URL(request.url, 'http://localhost').pathname;
+    const parsedUrl = new URL(request.url, 'http://localhost');
+    const pathname = parsedUrl.pathname;
+
+    // 1. ENDPOINT LẤY DANH SÁCH & LỌC DỮ LIỆU (BÀI 1)
+    if (/^\/api\/notes\/?$/.test(pathname)) {
+      if (request.method !== 'GET') {
+        return sendJson(response, 405, { detail: 'Chỉ hỗ trợ GET danh sách.' }, { Allow: 'GET' });
+      }
+
+      if (latencyMs > 0) await new Promise((resolve) => setTimeout(resolve, latencyMs));
+      let notes = readNotes(dataFile);
+
+      const keyword = (parsedUrl.searchParams.get('keyword') || '').trim().toLowerCase();
+      const status = (parsedUrl.searchParams.get('status') || '').trim();
+
+      if (keyword) {
+        notes = notes.filter(
+          (n) =>
+            (n.title && n.title.toLowerCase().includes(keyword)) ||
+            (n.content && n.content.toLowerCase().includes(keyword))
+        );
+      }
+
+      if (status) {
+        notes = notes.filter((n) => n.status === status);
+      }
+
+      return sendJson(response, 200, notes);
+    }
+
+    // 2. ENDPOINT CHI TIẾT & SỬA BẢN GHI THEO ID (BÀI 2)
     const match = /^\/api\/notes\/([1-9]\d*)\/?$/.exec(pathname);
     if (!match) return next();
 

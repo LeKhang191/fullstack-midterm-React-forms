@@ -1,4 +1,5 @@
-/** Both mock and Django mode use the same real HTTP GET/PUT calls. */
+import { initialNotes } from '../data/demoNotes.js';
+
 export const apiMode = import.meta.env.VITE_API_MODE === 'django' ? 'django' : 'mock';
 
 export class ApiError extends Error {
@@ -44,7 +45,9 @@ async function requestNote(path, options = {}) {
         fieldErrors[field] = Array.isArray(data[field]) ? data[field].join(' ') : String(data[field]);
       }
     }
-    const detail = data.detail || data.message ||
+    const detail =
+      data.detail ||
+      data.message ||
       (response.status === 404 ? 'Không tìm thấy bản ghi.' : `HTTP ${response.status}.`);
     throw new ApiError(String(detail), response.status, fieldErrors);
   }
@@ -60,4 +63,28 @@ export function updateNote(id, payload) {
     method: 'PUT',
     body: JSON.stringify(payload),
   });
+}
+
+export async function getNotes(filters = {}, { signal } = {}) {
+  const query = new URLSearchParams();
+  if (filters.keyword) query.set('keyword', filters.keyword);
+  if (filters.status) query.set('status', filters.status);
+
+  const queryString = query.toString() ? `?${query.toString()}` : '';
+
+  try {
+    return await requestNote(`/api/notes/${queryString}`, { signal });
+  } catch (error) {
+    let notes = [...initialNotes];
+    if (filters.keyword) {
+      const kw = filters.keyword.toLowerCase();
+      notes = notes.filter(
+        (n) => n.title.toLowerCase().includes(kw) || n.content.toLowerCase().includes(kw)
+      );
+    }
+    if (filters.status) {
+      notes = notes.filter((n) => n.status === filters.status);
+    }
+    return notes;
+  }
 }
