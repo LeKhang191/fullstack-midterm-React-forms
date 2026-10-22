@@ -9,4 +9,11 @@ MEMBERS:
 
 LINK VIDEO DEMO:
 
-HOW TO RUN:
+CHECKING NODE & NPM VERSION:
+node -v
+npm -v
+
+RUNNING PROJECT:
+cd Source/react-app
+npm ci
+npm run dev
