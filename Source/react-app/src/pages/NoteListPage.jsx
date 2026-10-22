@@ -58,11 +58,11 @@ export default function NoteListPage() {
     <div style={{ maxWidth: '960px', margin: '24px auto', padding: '0 16px', fontFamily: 'sans-serif' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
         <div>
-          <h2>Danh sách ghi chú</h2>
-          <p style={{ color: '#64748b', margin: '4px 0 0' }}>Lọc dữ liệu theo từ khóa và trạng thái (Bài 1)</p>
+          <h2>Note List</h2>
+          <p style={{ color: '#64748b', margin: '4px 0 0' }}>Filter data by keyword and status (Exercise 1)</p>
         </div>
         <Link to="/ui-demo" style={{ fontSize: '14px', color: '#2563eb' }}>
-          Xem Bộ UI Dùng Chung (Bài 3) →
+          View the shared UI kit (Exercise 3) →
         </Link>
       </div>
 
@@ -74,16 +74,16 @@ export default function NoteListPage() {
       />
 
       {loading ? (
-        <p>Đang tải danh sách...</p>
+        <p>Loading list...</p>
       ) : (
         <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
           <thead>
             <tr style={{ backgroundColor: '#f1f5f9', borderBottom: '2px solid #cbd5e1' }}>
               <th style={{ padding: '12px' }}>ID</th>
-              <th style={{ padding: '12px' }}>Tiêu đề</th>
-              <th style={{ padding: '12px' }}>Danh mục</th>
-              <th style={{ padding: '12px' }}>Trạng thái</th>
-              <th style={{ padding: '12px' }}>Hành động</th>
+              <th style={{ padding: '12px' }}>Title</th>
+              <th style={{ padding: '12px' }}>Category</th>
+              <th style={{ padding: '12px' }}>Status</th>
+              <th style={{ padding: '12px' }}>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -126,7 +126,7 @@ export default function NoteListPage() {
                         fontWeight: 500,
                       }}
                     >
-                      Chỉnh sửa (Bài 2) →
+                      Edit Note (Ex 2) →
                     </Link>
                   </td>
                 </tr>
@@ -134,7 +134,7 @@ export default function NoteListPage() {
             ) : (
               <tr>
                 <td colSpan="5" style={{ textAlign: 'center', padding: '24px', color: '#64748b' }}>
-                  Không tìm thấy ghi chú nào phù hợp bộ lọc.
+                  No notes found matching the filter criteria.
                 </td>
               </tr>
             )}

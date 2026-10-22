@@ -1,16 +1,16 @@
 export const CATEGORY_OPTIONS = [
-  { value: 'study', label: 'Học tập' },
-  { value: 'project', label: 'Dự án' },
-  { value: 'personal', label: 'Cá nhân' },
+  { value: 'study', label: 'Study' },
+  { value: 'project', label: 'Project' },
+  { value: 'personal', label: 'Personal' },
 ];
 
 export const STATUS_OPTIONS = [
-  { value: 'draft', label: 'Bản nháp' },
-  { value: 'in_progress', label: 'Đang thực hiện' },
-  { value: 'done', label: 'Hoàn thành' },
+  { value: 'draft', label: 'Draft' },
+  { value: 'in_progress', label: 'In Progress' },
+  { value: 'done', label: 'Done' },
 ];
 
-// DTO tu backend -> state cua controlled form.
+// DTO from backend -> state of controlled form.
 export function normalizeNote(note = {}) {
   return {
     title: String(note.title ?? ''),
@@ -25,17 +25,17 @@ export function validateNote(form) {
   const title = form.title?.trim() ?? '';
   const content = form.content?.trim() ?? '';
 
-  if (!title) errors.title = 'Tiêu đề không được để trống.';
-  else if (title.length > 120) errors.title = 'Tiêu đề tối đa 120 ký tự.';
+  if (!title) errors.title = 'Title is required.';
+  else if (title.length > 120) errors.title = 'Title must be at most 120 characters.';
 
-  if (!content) errors.content = 'Nội dung không được để trống.';
-  else if (content.length > 2000) errors.content = 'Nội dung tối đa 2.000 ký tự.';
+  if (!content) errors.content = 'Content is required.';
+  else if (content.length > 2000) errors.content = 'Content must be at most 2,000 characters.';
 
   if (!CATEGORY_OPTIONS.some((option) => option.value === form.category)) {
-    errors.category = 'Vui lòng chọn danh mục hợp lệ.';
+    errors.category = 'Please select a valid category.';
   }
   if (!STATUS_OPTIONS.some((option) => option.value === form.status)) {
-    errors.status = 'Vui lòng chọn trạng thái hợp lệ.';
+    errors.status = 'Please select a valid status.';
   }
 
   return errors;

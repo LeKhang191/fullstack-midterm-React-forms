@@ -41,7 +41,7 @@ export default function EditNotePage() {
     setSaving(false);
 
     if (!idIsValid) {
-      setFetchError('ID phải là số nguyên dương (ví dụ: 1).');
+      setFetchError('ID must be a positive integer (e.g., 1).');
       setFetchState('error');
       return () => controller.abort();
     }
@@ -97,13 +97,13 @@ export default function EditNotePage() {
       setOriginal(normalized);
       setUpdatedAt(result.updated_at || null);
       setErrors({});
-      setSuccess('Cập nhật ghi chú thành công! Dữ liệu đã được lưu.');
+      setSuccess('Note updated successfully! Data has been saved.');
     } catch (error) {
       if (activeIdRef.current !== id) return;
       if (error.fieldErrors && Object.keys(error.fieldErrors).length) {
         setErrors(error.fieldErrors);
       }
-      setSubmitError(error.message || 'Không lưu được ghi chú. Vui lòng thử lại.');
+      setSubmitError(error.message || 'Failed to save note. Please try again.');
     } finally {
       if (activeIdRef.current === id) setSaving(false);
     }
@@ -117,7 +117,7 @@ export default function EditNotePage() {
       setLookupError('');
       navigate(`/notes/${next}/edit`);
     } else {
-      setLookupError('ID phải là số nguyên dương.');
+      setLookupError('ID must be a positive integer.');
     }
   }
 
@@ -129,11 +129,11 @@ export default function EditNotePage() {
             <span className="brand-mark" aria-hidden="true">N</span>
             <div>
               <span className="brand-name">Notes Workspace</span>
-              <span className="brand-subtitle">REACT FORMS · BÀI TẬP 02</span>
+              <span className="brand-subtitle">REACT FORMS · EX 2</span>
             </div>
           </div>
           <div className="header-actions">
-            <Link to="/ui-demo" className="ui-demo-link">Xem bộ UI dùng chung →</Link>
+            <Link to="/ui-demo" className="ui-demo-link">View the shared UI kit →</Link>
             <span className={`mode-pill ${apiMode === 'mock' ? 'mode-pill--mock' : ''}`}>
               <span className="mode-dot" /> {apiMode === 'mock' ? 'Mock REST API' : 'Django API'}
             </span>
@@ -141,12 +141,12 @@ export default function EditNotePage() {
         </header>
 
         <main>
-          <div className="breadcrumb">Ứng dụng ghi chú <span>/</span> Chỉnh sửa ghi chú</div>
+          <div className="breadcrumb">Note App<span>/</span>Edit Note</div>
           <div className="page-title-row">
             <div>
-              <div className="eyebrow">QUẢN LÝ GHI CHÚ</div>
-              <h1>Chỉnh sửa ghi chú <span className="heading-id">#{id}</span></h1>
-              <p className="page-description">Tải dữ liệu theo ID, chỉnh sửa bằng controlled form và lưu qua API.</p>
+              <div className="eyebrow">NOTE MANAGEMENT</div>
+              <h1>Edit Note <span className="heading-id">#{id}</span></h1>
+              <p className="page-description">Load data by ID, edit with a controlled form, and save via API.</p>
             </div>
             <div className="method-group"><span>GET</span><span>PUT</span></div>
           </div>
@@ -155,26 +155,26 @@ export default function EditNotePage() {
             <section className="form-card" aria-labelledby="edit-heading">
               <div className="card-heading">
                 <div>
-                  <h2 id="edit-heading">Thông tin ghi chú</h2>
-                  <p>Trường có dấu <span className="required">*</span> là bắt buộc.</p>
+                  <h2 id="edit-heading">Note Information</h2>
+                  <p>Fields with <span className="required">*</span> are required.</p>
                 </div>
-                {fetchState === 'ready' && <div className="record-status"><span className="status-dot" /> Đã tải dữ liệu</div>}
+                {fetchState === 'ready' && <div className="record-status"><span className="status-dot" /> Data loaded</div>}
               </div>
 
               {fetchState === 'loading' && (
                 <div role="status" className="state-panel">
                   <div className="spinner" aria-hidden="true" />
-                  <h3>Đang tải ghi chú...</h3>
-                  <p>Đang gọi GET /api/notes/{id}/</p>
+                  <h3>Loading note...</h3>
+                  <p>Calling GET /api/notes/{id}/</p>
                 </div>
               )}
 
               {fetchState === 'error' && (
                 <div role="alert" className="state-panel error-panel">
                   <div className="state-icon">!</div>
-                  <h3>Không thể tải dữ liệu</h3>
+                  <h3>Cannot load data</h3>
                   <p>{fetchError}</p>
-                  <Button variant="secondary" onClick={() => setRetry((current) => current + 1)}>Thử tải lại</Button>
+                  <Button variant="secondary" onClick={() => setRetry((current) => current + 1)}>Try again</Button>
                 </div>
               )}
 
@@ -182,27 +182,27 @@ export default function EditNotePage() {
                 <form onSubmit={handleSave} noValidate>
                   {success && <div role="status" className="alert alert-success">✓ {success}</div>}
                   {submitError && <div role="alert" className="alert alert-error">{submitError}</div>}
-                  <InputField label="Tiêu đề" name="title" value={form.title}
+                  <InputField label="Title" name="title" value={form.title}
                     onChange={changeField} error={errors.title} disabled={saving} required
-                    maxLength={121} placeholder="Nhập tiêu đề ghi chú"
-                    hint="Tiêu đề ngắn gọn, tối đa 120 ký tự." />
-                  <TextareaField label="Nội dung" name="content" value={form.content}
+                    maxLength={121} placeholder="Enter note title"
+                    hint="Short and concise, maximum 120 characters." />
+                  <TextareaField label="Content" name="content" value={form.content}
                     onChange={changeField} error={errors.content} disabled={saving} required
-                    maxLength={2001} placeholder="Nhập nội dung ghi chú" rows={6}
-                    hint="Không được để trống, tối đa 2.000 ký tự." />
+                    maxLength={2001} placeholder="Enter note content" rows={6}
+                    hint="Must not be empty, maximum 2,000 characters." />
                   <FormRow columns={2}>
-                    <SelectField label="Danh mục" name="category" value={form.category}
+                    <SelectField label="Category" name="category" value={form.category}
                       onChange={changeField} error={errors.category} disabled={saving}
                       options={CATEGORY_OPTIONS} />
-                    <SelectField label="Trạng thái" name="status" value={form.status}
+                    <SelectField label="Status" name="status" value={form.status}
                       onChange={changeField} error={errors.status} disabled={saving}
                       options={STATUS_OPTIONS} />
                   </FormRow>
                   <div className="form-footer">
-                    <div className="save-note">{isDirty ? '● Có thay đổi chưa lưu' : '✓ Không có thay đổi chưa lưu'}</div>
+                    <div className="save-note">{isDirty ? '● There are unsaved changes' : '✓ No unsaved changes'}</div>
                     <div className="button-row">
-                      <Button variant="secondary" disabled={saving || !isDirty} onClick={resetForm}>Hoàn tác</Button>
-                      <Button type="submit" loading={saving} loadingText="Đang cập nhật...">Lưu thay đổi</Button>
+                      <Button variant="secondary" disabled={saving || !isDirty} onClick={resetForm}>Revert</Button>
+                      <Button type="submit" loading={saving} loadingText="Saving...">Save Changes</Button>
                     </div>
                   </div>
                 </form>
@@ -212,34 +212,34 @@ export default function EditNotePage() {
             <aside className="sidebar">
               <div className="side-card">
                 <div className="side-icon">↗</div>
-                <h3>Chuyển đến bản ghi</h3>
-                <p>Nhập ID của ghi chú bạn muốn chỉnh sửa.</p>
+                <h3>Move to record</h3>
+                <p>Enter the ID of the note you want to edit.</p>
                 <form className="lookup-form" onSubmit={handleNavigate} noValidate>
-                  <InputField label="ID ghi chú" name="lookupId" type="text" inputMode="numeric" pattern="[0-9]*" placeholder="Ví dụ: 2" value={lookupId} disabled={saving}
+                  <InputField label="Note ID" name="lookupId" type="text" inputMode="numeric" pattern="[0-9]*" placeholder="e.g., 2" value={lookupId} disabled={saving}
                     onChange={(event) => { setLookupId(event.target.value); setLookupError(''); }} error={lookupError} />
-                  <Button type="submit" disabled={saving}>Mở</Button>
+                  <Button type="submit" disabled={saving}>Open</Button>
                 </form>
-                {apiMode === 'mock' && <p className="example-ids">Dữ liệu mẫu: <Button variant="link" disabled={saving} onClick={() => navigate('/notes/1/edit')}>#1</Button> <Button variant="link" disabled={saving} onClick={() => navigate('/notes/2/edit')}>#2</Button> <Button variant="link" disabled={saving} onClick={() => navigate('/notes/3/edit')}>#3</Button></p>}
+                {apiMode === 'mock' && <p className="example-ids">Sample data: <Button variant="link" disabled={saving} onClick={() => navigate('/notes/1/edit')}>#1</Button> <Button variant="link" disabled={saving} onClick={() => navigate('/notes/2/edit')}>#2</Button> <Button variant="link" disabled={saving} onClick={() => navigate('/notes/3/edit')}>#3</Button></p>}
               </div>
               <div className="side-card">
-                <h3>Quy trình hoạt động</h3>
+                <h3>Operation Process</h3>
                 <ol className="steps-list">
-                  <li><span>01</span> GET dữ liệu theo ID</li>
-                  <li><span>02</span> Điền dữ liệu vào form</li>
+                  <li><span>01</span> GET data by ID</li>
+                  <li><span>02</span> Fill data into form</li>
                   <li><span>03</span> Validate title &amp; content</li>
-                  <li><span>04</span> PUT cập nhật qua API</li>
-                  <li><span>05</span> Hiển thị kết quả</li>
+                  <li><span>04</span> PUT update via API</li>
+                  <li><span>05</span> Display result</li>
                 </ol>
               </div>
               <div className="side-tip">
-                <strong>Thông tin kết nối</strong>
-                <span>{apiMode === 'mock' ? 'Đang dùng HTTP Mock REST API, lưu dữ liệu mẫu vào .mock-data/notes.json.' : 'Vite proxy chuyển /api/* đến Django cổng 8000.'}</span>
-                {updatedAt && <span>Cập nhật lần cuối: {new Date(updatedAt).toLocaleString('vi-VN')}</span>}
+                <strong>Connection Information</strong>
+                <span>{apiMode === 'mock' ? 'Using HTTP Mock REST API, saving sample data to .mock-data/notes.json.' : 'Vite proxy forwards /api/* to Django on port 8000.'}</span>
+                {updatedAt && <span>Last updated: {new Date(updatedAt).toLocaleString('vi-VN')}</span>}
               </div>
             </aside>
           </div>
         </main>
-        <footer className="site-footer">SEMINAR · REACT FORMS · TV2 / EDIT PAGE</footer>
+        <footer className="site-footer">SEMINAR · REACT FORMS</footer>
       </div>
     </div>
   );

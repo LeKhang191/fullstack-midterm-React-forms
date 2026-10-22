@@ -25,7 +25,7 @@ async function requestNote(path, options = {}) {
     });
   } catch (error) {
     if (error.name === 'AbortError') throw error;
-    throw new ApiError('Không kết nối được API. Kiểm tra server và cấu hình VITE_API_MODE.');
+    throw new ApiError('Unable to connect to the API. Check the server and the VITE_API_MODE configuration.');
   }
 
   let data = {};
@@ -34,7 +34,7 @@ async function requestNote(path, options = {}) {
     try {
       data = JSON.parse(text);
     } catch {
-      throw new ApiError('API không trả về JSON hợp lệ. Kiểm tra URL backend.', response.status);
+      throw new ApiError('API did not return valid JSON. Check the backend URL.', response.status);
     }
   }
 
@@ -48,7 +48,7 @@ async function requestNote(path, options = {}) {
     const detail =
       data.detail ||
       data.message ||
-      (response.status === 404 ? 'Không tìm thấy bản ghi.' : `HTTP ${response.status}.`);
+      (response.status === 404 ? 'Record not found.' : `HTTP ${response.status}.`);
     throw new ApiError(String(detail), response.status, fieldErrors);
   }
   return data;

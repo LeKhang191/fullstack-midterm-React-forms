@@ -1,7 +1,7 @@
 
 export default function Button({
   children, type = 'button', variant = 'primary', loading = false,
-  loadingText = 'Đang xử lý...', disabled = false, className = '', ...props
+  loadingText = 'Processing...', disabled = false, className = '', ...props
 }) {
   return (
     <button

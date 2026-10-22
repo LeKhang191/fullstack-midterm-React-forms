@@ -29,13 +29,13 @@ export default function App() {
         }}
       >
         <NavLink to="/" style={navLinkStyle}>
-          [Bài 1] Danh sách &amp; Lọc
+          [Bài 1] List &amp; Filter
         </NavLink>
         <NavLink to="/notes/1/edit" style={navLinkStyle}>
-          [Bài 2] Chỉnh sửa Note (#1)
+          [Bài 2] Edit Note
         </NavLink>
         <NavLink to="/ui-demo" style={navLinkStyle}>
-          [Bài 3] UI Components Showcase
+          [Bài 3] UI Components
         </NavLink>
       </nav>
 

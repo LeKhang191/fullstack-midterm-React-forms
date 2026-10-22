@@ -3,7 +3,7 @@ import { InputField, SelectField, Button, FormRow } from './ui/index.js';
 import { STATUS_OPTIONS } from '../utils/noteForm.js';
 
 const FILTER_STATUS_OPTIONS = [
-  { value: '', label: '-- Tất cả trạng thái --' },
+  { value: '', label: '-- All states --' },
   ...STATUS_OPTIONS,
 ];
 
@@ -26,15 +26,15 @@ export default function NoteFilterForm({ filters, onFilterChange, onReset, onSub
     >
       <FormRow columns={2}>
         <InputField
-          label="Từ khóa tìm kiếm (Tiêu đề, nội dung)"
+          label="Search keyword (Title, Content)"
           name="keyword"
           value={filters.keyword}
           onChange={handleChange}
-          placeholder="Nhập từ khóa cần tìm..."
+          placeholder="Enter search keyword..."
         />
 
         <SelectField
-          label="Trạng thái"
+          label="Status"
           name="status"
           value={filters.status}
           onChange={handleChange}
@@ -44,10 +44,10 @@ export default function NoteFilterForm({ filters, onFilterChange, onReset, onSub
 
       <div style={{ display: 'flex', gap: '8px', marginTop: '12px' }}>
         <Button type="submit" variant="primary">
-          Tìm kiếm
+          Search
         </Button>
         <Button type="button" variant="secondary" onClick={onReset}>
-          Đặt lại (Reset)
+          Reset
         </Button>
       </div>
     </form>

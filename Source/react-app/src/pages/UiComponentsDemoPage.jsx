@@ -35,49 +35,49 @@ export default function UiComponentsDemoPage() {
         <header className="site-header">
           <div className="brand">
             <span className="brand-mark" aria-hidden="true">UI</span>
-            <div><span className="brand-name">Bộ UI dùng chung</span><span className="brand-subtitle">REACT FORMS · TÁI SỬ DỤNG COMPONENTS</span></div>
+            <div><span className="brand-name">Shared UI Components</span><span className="brand-subtitle">REACT FORMS · REUSE COMPONENTS</span></div>
           </div>
-          <Link className="ui-demo-link" to="/notes/1/edit">← Quay lại Edit Page</Link>
+          <Link className="ui-demo-link" to="/notes/1/edit">← Return to Edit Page</Link>
         </header>
         <main>
-          <div className="breadcrumb">Thành viên 2 <span>/</span> Minh họa dùng lại Components</div>
+          <div className="breadcrumb">Member 2 <span>/</span> Demo: Reusing Components</div>
           <div className="page-title-row">
             <div>
               <div className="eyebrow">COMPONENT LIBRARY</div>
               <h1>InputField · SelectField · Button · FormRow</h1>
-              <p className="page-description">Đây là ví dụ sử dụng bộ UI chung cho form lọc. Đây không phải trang Bài 1 của TV1.</p>
+              <p className="page-description">This is a demo of using shared UI components for a filter form. This is not the first exercise page.</p>
             </div>
           </div>
           <div className="demo-grid">
             <section className="form-card" aria-labelledby="demo-title">
-              <div className="card-heading"><div><h2 id="demo-title">Ví dụ: giao diện Filter Form</h2><p>Chỉ minh họa việc tái sử dụng, không gọi API danh sách.</p></div></div>
+              <div className="card-heading"><div><h2 id="demo-title">Demo: Filter Form Interface</h2><p>This only demonstrates reusing components, it doesn't call the API to fetch the list.</p></div></div>
               <form onSubmit={handleSubmit}>
                 <FormRow columns={2}>
-                  <InputField label="Từ khóa" name="keyword" value={filters.keyword} onChange={handleChange} placeholder="Tìm ghi chú..." hint="Controlled input với state của React." />
-                  <SelectField label="Trạng thái" name="status" value={filters.status} onChange={handleChange} options={FILTER_STATUSES} hint="Controlled select dùng options truyền qua props." />
+                  <InputField label="Keyword" name="keyword" value={filters.keyword} onChange={handleChange} placeholder="Search notes..." hint="Controlled input với state của React." />
+                  <SelectField label="Status" name="status" value={filters.status} onChange={handleChange} options={FILTER_STATUSES} hint="Controlled select dùng options truyền qua props." />
                 </FormRow>
                 <div className="button-row demo-actions">
-                  <Button type="submit">Áp dụng</Button>
-                  <Button variant="secondary" onClick={handleClear}>Xóa lọc</Button>
+                  <Button type="submit">Apply</Button>
+                  <Button variant="secondary" onClick={handleClear}>Clear Filter</Button>
                 </div>
                 <div className="demo-result" role="status">
-                  <strong>Trạng thái submit:</strong>
+                  <strong>Submit Status:</strong>
                   {applied ? (
                     <pre>{JSON.stringify(applied, null, 2)}</pre>
-                  ) : <p>Chưa có bộ lọc được gửi. Hãy nhập từ khóa và bấm Áp dụng.</p>}
+                  ) : <p>No filter applied. Please enter a keyword and click Apply.</p>}
                 </div>
               </form>
             </section>
             <aside className="side-card demo-explainer">
-              <h3>Cùng component, khác nghiệp vụ</h3>
-              <p><strong>Edit Page (TV2)</strong> đang sử dụng InputField, TextareaField, SelectField, Button và FormRow để tải/điều chỉnh dữ liệu qua GET/PUT.</p>
-              <p><strong>Filter Form (TV1)</strong> có thể import lại InputField, SelectField, Button và FormRow, nhưng cần tự bổ sung API lọc, URL sync và debounce theo đề.</p>
-              <p>Không có code nào trong thư mục của TV1 hay TV3 bị thay đổi.</p>
-              <Link to="/notes/1/edit" className="ui-demo-link">Xem trang Edit hoàn chỉnh →</Link>
+              <h3>Same component, different use cases</h3>
+              <p><strong>Edit Page</strong> uses InputField, TextareaField, SelectField, Button, and FormRow to load/adjust data via GET/PUT.</p>
+              <p><strong>Filter Form</strong> can import the same components, but needs to add the filtering API, URL synchronization, and debounce functionality as required.</p>
+              <p>No code in the directories of mem1 or mem3 has been modified.</p>
+              <Link to="/notes/1/edit" className="ui-demo-link">View complete Edit page →</Link>
             </aside>
           </div>
         </main>
-        <footer className="site-footer">SEMINAR · REACT FORMS · TV2 / COMPONENT DEMO</footer>
+        <footer className="site-footer">SEMINAR · REACT FORMS</footer>
       </div>
     </div>
   );

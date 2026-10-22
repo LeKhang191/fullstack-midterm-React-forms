@@ -1,4 +1,4 @@
-# Bộ UI tái sử dụng — TV2 chủ động xây dựng để không chờ TV3
+# Bộ UI tái sử dụng
 
 Tất cả components nằm trong `Source/bai2/src/components/ui/` và được export từ `index.js`.
 
