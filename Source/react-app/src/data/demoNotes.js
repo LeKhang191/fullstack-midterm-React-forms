@@ -1,5 +1,3 @@
-// Du lieu demo de TV2 chay form Edit truoc khi Django API duoc hoan thanh.
-// Cau truc 4 truong can dong bo voi TV3 (models.py, serializers.py).
 export const initialNotes = [
   {
     id: 1,

@@ -1,6 +1,4 @@
-/** One shared button for submit, reset and secondary actions.
- * Default type=button avoids accidental submissions inside forms.
- */
+
 export default function Button({
   children, type = 'button', variant = 'primary', loading = false,
   loadingText = 'Đang xử lý...', disabled = false, className = '', ...props

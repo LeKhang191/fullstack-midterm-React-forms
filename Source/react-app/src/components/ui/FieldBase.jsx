@@ -1,9 +1,5 @@
 import { useId } from 'react';
 
-/**
- * Shared accessible field shell. Its value belongs to the parent (controlled input).
- * Internal IDs link label, help text and errors without hard-coded duplicate IDs.
- */
 export default function FieldBase({
   as = 'input', id, label, name, value, onChange, required = false,
   error = '', hint = '', disabled = false, placeholder = '', className = '',

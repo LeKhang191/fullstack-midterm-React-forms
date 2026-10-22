@@ -5,7 +5,6 @@ import EditNotePage from './pages/EditNotePage.jsx';
 import UiComponentsDemoPage from './pages/UiComponentsDemoPage.jsx';
 
 export default function App() {
-  // Hàm tạo style động: Trang nào đang mở sẽ sáng trắng và đậm hơn, trang khác sẽ có màu xám mờ
   const navLinkStyle = ({ isActive }) => ({
     color: isActive ? '#ffffff' : '#94a3b8',
     textDecoration: 'none',

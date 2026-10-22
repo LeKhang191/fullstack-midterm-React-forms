@@ -9,10 +9,7 @@ const FILTER_STATUSES = [
   { value: 'done', label: 'Hoàn thành' },
 ];
 
-/**
- * Self-contained component showcase for sharing the UI contract with TV1.
- * NOT the final TV1 filter page; intentionally performs no backend calls.
- */
+
 export default function UiComponentsDemoPage() {
   const [filters, setFilters] = useState({ keyword: '', status: 'all' });
   const [applied, setApplied] = useState(null);

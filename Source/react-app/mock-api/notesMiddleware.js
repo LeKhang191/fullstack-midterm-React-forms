@@ -1,10 +1,4 @@
-/**
- * Mock REST API cho toàn bộ ứng dụng (Bài 1 + Bài 2).
- * Hỗ trợ:
- * - GET /api/notes/ (Lọc theo query: ?keyword=&status=) [Bài 1]
- * - GET /api/notes/:id/ [Bài 2]
- * - PUT /api/notes/:id/ [Bài 2]
- */
+
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { initialNotes } from '../src/data/demoNotes.js';
@@ -64,7 +58,6 @@ export function createNotesMiddleware({ dataFile, latencyMs = 200 }) {
     const parsedUrl = new URL(request.url, 'http://localhost');
     const pathname = parsedUrl.pathname;
 
-    // 1. ENDPOINT LẤY DANH SÁCH & LỌC DỮ LIỆU (BÀI 1)
     if (/^\/api\/notes\/?$/.test(pathname)) {
       if (request.method !== 'GET') {
         return sendJson(response, 405, { detail: 'Chỉ hỗ trợ GET danh sách.' }, { Allow: 'GET' });
@@ -91,7 +84,6 @@ export function createNotesMiddleware({ dataFile, latencyMs = 200 }) {
       return sendJson(response, 200, notes);
     }
 
-    // 2. ENDPOINT CHI TIẾT & SỬA BẢN GHI THEO ID (BÀI 2)
     const match = /^\/api\/notes\/([1-9]\d*)\/?$/.exec(pathname);
     if (!match) return next();
 

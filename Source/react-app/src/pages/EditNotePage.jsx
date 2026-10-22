@@ -91,7 +91,7 @@ export default function EditNotePage() {
     setSaving(true);
     try {
       const result = await updateNote(id, toUpdatePayload(form));
-      if (activeIdRef.current !== id) return; // Avoid stale response after changing URL.
+      if (activeIdRef.current !== id) return; 
       const normalized = normalizeNote(result);
       setForm(normalized);
       setOriginal(normalized);
